@@ -1,6 +1,6 @@
 # CORS proxy
 
-Simple AWS Lambda based proxy server for making CORS requests from browser to any HTTP server.
+Simple AWS Lambda based proxy server for making CORS requests from browser to any HTTP server.  The code was originally an open proxy but was modified to proxy to a specific destination. 
 
 ### Run locally
 
@@ -8,21 +8,25 @@ Simple AWS Lambda based proxy server for making CORS requests from browser to an
 ```
 npm install
 ```
-#### 2. Run
+#### 2 Modify URL
+In handler.js change the URL to point to your server
+
+#### 3. Run
 ```
 node_modules/.bin/serverless offline
 ```
-#### 3. Use
-Open your browser and go to `http://localhost:3000/?url=<origin page>`. For example:
+#### 4. Use
+Open your browser and go to `http://localhost:3000`. For example:
 ```
 http://localhost:3000/?url=https://github.com/
 ```
-
 ### Run on AWS
 
 #### 0. Requirements
 You need AWS account first.
-Also you need your IAM user has access to deploy AWS lambdas.
+Also you need your IAM to have access for serverless deployment.  This resource can be useful if you are new to serverless:
+
+https://serverless.com/blog/abcs-of-iam-permissions/
 
 #### 1. Install
 ```
@@ -57,12 +61,12 @@ stack: cors-proxy-dev
 api keys:
   None
 endpoints:
-  GET - https://qwertyuiop.execute-api.eu-central-1.amazonaws.com/dev/
+  GET - https://blablabla.execute-api.eu-central-1.amazonaws.com/dev/
 functions:
   lambda: cors-proxy-dev-lambda
 ```
 #### 3. Use
 Open your browser and use `endpoint` field from previous console response as base address. For example:
 ```
-https://qwertyuiop.execute-api.eu-central-1.amazonaws.com/dev/?url=https://github.com/
+https://blablabla.execute-api.eu-central-1.amazonaws.com/dev/
 ```

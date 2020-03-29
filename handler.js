@@ -1,5 +1,5 @@
 'use strict';
-
+const proxyURL = ""
 const request = require('request');
 
 /**
@@ -17,21 +17,10 @@ module.exports.corsProxy = (event, context, callback) => {
     console.log(event);
     console.log(`Got request with params:`, params);
 
-    if (!params.url) {
-        const errorResponse = {
-            statusCode: 400,
-            body: 'Unable get url from \'url\' query parameter'
-        };
-
-        callback(null, errorResponse);
-
-        return;
-    }
-
     return new Promise((resolve, reject) => {
         let originalRequestBody = event.body;
         request({
-            url: params.url,
+            url: proxyURL,
             method: event.httpMethod,
             timeout: 20000,
             json: event.httpMethod === 'POST' ? JSON.parse(originalRequestBody) : null,
@@ -46,7 +35,7 @@ module.exports.corsProxy = (event, context, callback) => {
                 return;
             }
 
-            console.log(`Got response from ${params.url} ---> {statusCode: ${originalResponse.statusCode}}`);
+            console.log(`Got response from ${proxyURL} ---> {statusCode: ${originalResponse.statusCode}}`);
             const proxyBody = originalRequestBody ? JSON.stringify(body) : originalResponse.body;
 
             const proxyResponse = {
